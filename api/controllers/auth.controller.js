@@ -1,8 +1,10 @@
-export const register = (req, res) => {
+import bcrypt from 'bcrypt';
+
+export const register = async (req, res) => {
     const { username, email, password } = req.body;
 
     // hash the password
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     
     // create a new user and save it to the database
 }
