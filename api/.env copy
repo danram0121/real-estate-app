@@ -1,3 +1,4 @@
 # necessary variables for the app to run
 
 DATABASE_URL="mongodb+srv://root:randompassword@cluster0.ab1cd.mongodb.net/mydb?retryWrites=true&w=majority"
+JWT_SECRET_KEY=SECRET-KEY
