@@ -6,6 +6,9 @@
         flex: 3;
 
         .wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
             padding-right: 50px;
 
             .info{
