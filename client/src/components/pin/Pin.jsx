@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Marker, Popup } from "react-leaflet";
 import { Link } from "react-router-dom";
 import "./pin.scss";
