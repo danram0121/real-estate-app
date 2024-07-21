@@ -5,7 +5,7 @@ import ListPage from "./routes/listPage/listPage";
 import Layout from "./routes/layout/layout";
 import Login from "./routes/login/login";
 import ListDetail from "./routes/listDetail/listDetail";
-import profilePage from "./routes/profilePage/profilePage";
+import ProfilePage from "./routes/profilePage/ProfilePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,7 +31,7 @@ function App() {
         },
         {
           path: "/profile",
-          element: <profilePage />,
+          element: <ProfilePage />,
         },
       ],
     },
