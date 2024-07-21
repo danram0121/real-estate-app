@@ -47,6 +47,7 @@ nav{
     .right{
         flex: 2;
         display: flex;
+        gap: 20px;
         align-items: center;
         justify-content: flex-end;
         background-color: #fcf5f3;
@@ -100,6 +101,49 @@ nav{
             @include sm{
                 a{
                     display: initial;
+                }
+            }
+        }
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-weight: bold;
+
+            img{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+
+            span{
+                @include sm{
+                    display: none;
+                }
+            }
+
+            .profile{
+                padding: 12px 24px;
+                background-color: #fece51;
+                cursor: pointer;
+                border: none;
+                position: relative;
+
+                .notification{
+                    position:absolute;
+                    top: -8px;
+                    right: -8px;
+                    background-color: red;
+                    color: white;
+                    border-radius: 50%;
+                    width: 26px;
+                    height: 26px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
         }
