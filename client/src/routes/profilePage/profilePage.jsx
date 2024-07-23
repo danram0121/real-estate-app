@@ -16,8 +16,12 @@ const ProfilePage = () => {
               <span>
                 Avatar: <img src={userData.img} alt="" />
               </span>
-              <span>Username: {userData.name}</span>
-              <span>Email: {userData.email}</span>
+              <span>
+                Username: <b>{userData.name}</b>
+              </span>
+              <span>
+                Email: <b>{userData.email}</b>
+              </span>
             </div>
             <div className="title">
               <h1>My Listings</h1>
