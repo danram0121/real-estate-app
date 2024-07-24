@@ -23,6 +23,7 @@ const ProfilePage = () => {
               <span>
                 Email: <b>{userData.email}</b>
               </span>
+              <button>Logout</button>
             </div>
             <div className="title">
               <h1>My Listings</h1>
