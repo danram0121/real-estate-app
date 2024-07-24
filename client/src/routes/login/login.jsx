@@ -58,7 +58,7 @@ const Login = () => {
               />
               <button disabled={IsLoading}>Login</button>
               {error && <span className="error">{error}</span>}
-              <Link to="/register">Don't have an account?</Link>
+              <Link to="/register">Don&apos;t have an account?</Link>
             </form>
           </div>
         </div>
