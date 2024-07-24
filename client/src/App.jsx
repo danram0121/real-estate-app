@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./routes/homePage/homePage";
 import ListPage from "./routes/listPage/listPage";
-import Layout from "./routes/layout/layout";
+import { Layout, RequireAuth } from "./routes/layout/layout";
 import Login from "./routes/login/login";
 import ListDetail from "./routes/listDetail/listDetail";
 import ProfilePage from "./routes/profilePage/ProfilePage";
@@ -34,6 +34,12 @@ function App() {
           path: "/:id",
           element: <ListDetail />,
         },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
         {
           path: "/profile",
           element: <ProfilePage />,
