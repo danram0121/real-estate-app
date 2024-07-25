@@ -56,7 +56,9 @@ export const updateUser = async (req, res) => {
             }
         })
 
-        res.status(200).json(updatedUser);
+        const {password: userPassword, ...userInfo} = updatedUser;
+
+        res.status(200).json(userInfo);
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "failed to update user"});
