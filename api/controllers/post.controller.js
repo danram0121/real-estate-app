@@ -3,9 +3,10 @@ import prisma from "../lib/prisma.js";
 export const getPosts = async (req, res) => {
     console.log("Get all posts");
 
-    res.status(200).json
     try {
+        const posts = await prisma.post.findMany()
         
+        res.status(200).json(posts)
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Failed to get all post"})
@@ -13,11 +14,14 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
-    console.log("Get this post");
+    const id = req.params.id;
 
-    res.status(200).json
     try {
+        const post = await prisma.post.findUnique({
+            where: {id}
+        })
         
+        res.status(200).json(post)
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Failed to get post"})
@@ -25,11 +29,18 @@ export const getPost = async (req, res) => {
 };
 
 export const addPost = async (req, res) => {
-    console.log("New post");
+    const body = req.body;
+    const tokenUserId = req.userID;
 
-    res.status(200).json
     try {
-        
+        const newPost = await prisma.post.create({
+            data: {
+                ...body,
+                userId: tokenUserId,
+            }
+        })
+
+        res.status(200).json(newPost)
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Failed to add new post"})
@@ -39,9 +50,9 @@ export const addPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     console.log("Updates post");
 
-    res.status(200).json
     try {
         
+        res.status(200).json()
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Failed to update post"})
@@ -49,11 +60,23 @@ export const updatePost = async (req, res) => {
 };
 
 export const deletePost = async (req, res) => {
-    console.log("Deleted post");
+    const id = req.params.id;
+    const tokenUserId = req.userID;
 
-    res.status(200).json
     try {
-        
+        const post = await prisma.post.findUnique({
+            where: {id}
+        })
+
+        if (post.userId !== tokenUserId) {
+            return res.status(403).json({ message: "Not Authorized"})
+        }
+
+        await prisma.post.delete({
+            where: {id}
+        })
+
+        res.status(200).json({ message: "Post deleted"})
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Failed to delete post"})
