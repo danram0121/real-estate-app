@@ -1,11 +1,11 @@
-import { listData } from "../../lib/testdata";
 import "./listPage.scss";
 import Filter from "../../components/filter/Filter";
 import Card from "../../components/card/Card";
 import Map from "../../components/map/Map";
+import { useLoaderData } from "react-router-dom";
 
-const listPage = () => {
-  const data = listData;
+const ListPage = () => {
+  const posts = useLoaderData();
 
   return (
     <>
@@ -13,17 +13,17 @@ const listPage = () => {
         <div className="listContainer">
           <div className="wrapper">
             <Filter />
-            {data.map((item) => (
+            {posts.map((item) => (
               <Card key={item.id} item={item} />
             ))}
           </div>
         </div>
         <div className="mapContainer">
-          <Map items={data} />
+          <Map items={posts} />
         </div>
       </div>
     </>
   );
 };
 
-export default listPage;
+export default ListPage;
