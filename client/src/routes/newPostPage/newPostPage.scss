@@ -85,6 +85,17 @@
     .sideContainer{
         flex: 2;
         background-color: #fcf5f3;
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+
+        img{
+            width: 50%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
     }
 }
