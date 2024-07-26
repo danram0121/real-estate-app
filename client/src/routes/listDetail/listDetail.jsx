@@ -1,32 +1,44 @@
 import "./listDetail.scss";
-import { singlePostData, userData } from "../../lib/testdata";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
+import DOMPurify from "dompurify";
+import { useLoaderData } from "react-router-dom";
 
 const ListDetail = () => {
+  const post = useLoaderData();
+  console.log(post);
   return (
     <>
       <div className="listDetail">
         <div className="details">
           <div className="wrapper">
-            <Slider images={singlePostData.images} />
+            <Slider images={post.images} />
             <div className="info">
               <div className="top">
                 <div className="post">
-                  <h1>{singlePostData.title}</h1>
+                  <p className="price">$ {post.price}</p>
                   <p className="address">
-                    <img src="./pin.png" alt="" />
-                    <span>{singlePostData.address}</span>
+                    <span>
+                      <img src="./pin.png" alt="" /> <p>{post.address}</p>{" "}
+                      <p>, {post.city}</p>
+                    </span>
+                    <span>
+                      {post.state} {post.zip}
+                    </span>
                   </p>
-                  <p className="price">$ {singlePostData.price}</p>
                 </div>
                 <div className="user">
-                  <img src={userData.img} alt="" />
-                  <span>{userData.name}</span>
+                  <img src={post.user.avatar} alt="" />
+                  <span>{post.user.username}</span>
                 </div>
               </div>
               <div className="bottom">
-                <p className="description">{singlePostData.description}</p>
+                <div
+                  className="description"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(post.postDetail.description),
+                  }}
+                ></div>
               </div>
             </div>
           </div>
@@ -39,40 +51,48 @@ const ListDetail = () => {
                 <img src="/utility.png" alt="" />
                 <div className="featureText">
                   <span>Utilities</span>
-                  <p>Renter is responsible</p>
+                  {post.postDetail.utilities === "owner" ? (
+                    <p>Owner is responsible</p>
+                  ) : (
+                    <p>Renter is responsible</p>
+                  )}
                 </div>
               </div>
               <div className="feature">
                 <img src="/pet.png" alt="" />
                 <div className="featureText">
                   <span>Pet Policy</span>
-                  <p>Pets Allowed</p>
+                  {post.postDetail.pet === "allowed" ? (
+                    <p>Pets Allowed</p>
+                  ) : (
+                    <p>No Pets Allowed</p>
+                  )}
                 </div>
               </div>
               <div className="feature">
                 <img src="/fee.png" alt="" />
                 <div className="featureText">
                   <span>Property Fees</span>
-                  <p>Must have 3x the rent in total household income</p>
+                  <p>{post.postDetail.income}</p>
                 </div>
               </div>
             </div>
             <p className="title">Room Sizes</p>
             <div className="sizes">
               <div className="feature">
-                <img src="/size.png" alt="" />
-                <span>
-                  {Math.round(singlePostData.size / 10.761)} sqm (
-                  {singlePostData.size} sqft)
-                </span>
-              </div>
-              <div className="feature">
                 <img src="/bed.png" alt="" />
-                <span>{singlePostData.bedRooms} bed</span>
+                <span>{post.bedroom} bed</span>
               </div>
               <div className="feature">
                 <img src="/bath.png" alt="" />
-                <span>{singlePostData.bathroom} bath</span>
+                <span>{post.bathroom} bath</span>
+              </div>
+              <div className="feature">
+                <img src="/size.png" alt="" />
+                <span>
+                  {Math.round(post.postDetail.size / 10.761)} sqm (
+                  {post.postDetail.size} sqft)
+                </span>
               </div>
             </div>
             <p className="title">Nearby Places</p>
@@ -82,28 +102,43 @@ const ListDetail = () => {
                   <img src="/school.png" alt="" />
                   <div className="featureText">
                     <span>School</span>
-                    <p>{singlePostData.school}</p>
+                    <p>
+                      {post.postDetail.school > 999
+                        ? post.postDetail.school / 1000 + "km"
+                        : post.postDetail.school + "m"}{" "}
+                      away
+                    </p>
                   </div>
                 </div>
                 <div className="feature">
                   <img src="/bus.png" alt="" />
                   <div className="featureText">
                     <span>Bus Stop</span>
-                    <p>{singlePostData.bus}</p>
+                    <p>
+                      {post.postDetail.bus > 999
+                        ? post.postDetail.bus / 1000 + "km"
+                        : post.postDetail.bus + "m"}{" "}
+                      away
+                    </p>
                   </div>
                 </div>
                 <div className="feature">
                   <img src="/restaurant.png" alt="" />
                   <div className="featureText">
                     <span>Restaurant</span>
-                    <p>{singlePostData.restaurant}</p>
+                    <p>
+                      {post.postDetail.restaurant > 999
+                        ? post.postDetail.restaurant / 1000 + "km"
+                        : post.postDetail.restaurant + "m"}{" "}
+                      away
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
             <p className="title">Location</p>
             <div className="mapContainer">
-              <Map items={[singlePostData]} />
+              <Map items={[post]} />
             </div>
             <div className="buttons">
               <div className="button">
