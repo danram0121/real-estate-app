@@ -80,8 +80,10 @@
     .smallImages{
         flex: 1;
         display: flex;
+        height: 375px;
         flex-direction: column;
         gap: 20px;
+        overflow-y: scroll;
         
         img{
             width: 100%;
