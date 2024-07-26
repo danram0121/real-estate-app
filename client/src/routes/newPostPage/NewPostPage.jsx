@@ -1,4 +1,6 @@
 import "./newPostPage.scss";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const NewPostPage = () => {
   return (
@@ -50,6 +52,7 @@ const NewPostPage = () => {
               </div>
               <div className="item description">
                 <label htmlFor="description">Description</label>
+                <ReactQuill theme="snow" />
               </div>
               <div className="item">
                 <label htmlFor="bedroom">Bedroom</label>
