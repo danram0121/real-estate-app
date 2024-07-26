@@ -80,6 +80,7 @@ const NewPostPage = () => {
                 <select name="property">
                   <option value="apartment">Apartment</option>
                   <option value="house">House</option>
+                  <option value="townhouse">Townhouse</option>
                   <option value="condo">Condo</option>
                   <option value="land">Land</option>
                 </select>
