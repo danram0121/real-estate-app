@@ -34,7 +34,7 @@ model Post {
   longitude   String
   bedroom     Int
   bathroom    Int
-  size        Int
+  size        Int?
   type        Type
   property    Property
   description String
