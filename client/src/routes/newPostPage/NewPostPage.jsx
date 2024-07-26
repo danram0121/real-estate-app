@@ -1,15 +1,67 @@
+import { useState } from "react";
 import "./newPostPage.scss";
+import apiRequest from "../../lib/apiRequest";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+import UploadWidget from "../../components/uploadWidget/UploadWidget";
 
 const NewPostPage = () => {
+  const [desc, setDesc] = useState("");
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const inputs = Object.fromEntries(formData);
+
+    try {
+      const res = await apiRequest.post("/posts", {
+        postData: {
+          images: images,
+          price: parseInt(inputs.price),
+          address: inputs.address,
+          city: inputs.city,
+          state: inputs.state,
+          zip: parseInt(inputs.zip),
+          latitude: inputs.latitude,
+          longitude: inputs.longitude,
+          bedroom: parseInt(inputs.bedroom),
+          bathroom: parseInt(inputs.bathroom),
+          type: inputs.type,
+          property: inputs.property,
+        },
+        postDetail: {
+          description: desc,
+          utilities: inputs.utilities,
+          pet: inputs.pet,
+          income: inputs.income,
+          size: parseInt(inputs.size),
+          school: parseInt(inputs.school),
+          bus: parseInt(inputs.bus),
+          restaurant: parseInt(inputs.restaurant),
+        },
+      });
+      console.log(res);
+      navigate("/" + res.data.id);
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.message);
+    }
+    console.log(inputs);
+  };
+
   return (
     <>
       <div className="newPostPage">
         <div className="formContainer">
           <h1>Add New Post</h1>
           <div className="wrapper">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="item">
                 <label htmlFor="price">Price</label>
                 <input id="price" name="price" type="number" />
@@ -52,7 +104,7 @@ const NewPostPage = () => {
               </div>
               <div className="item description">
                 <label htmlFor="description">Description</label>
-                <ReactQuill theme="snow" />
+                <ReactQuill theme="snow" onChange={setDesc} value={desc} />
               </div>
               <div className="item">
                 <label htmlFor="bedroom">Bedroom</label>
@@ -108,10 +160,24 @@ const NewPostPage = () => {
                 <input id="longitude" name="longitude" type="text" />
               </div>
               <button className="sendButton">Add</button>
+              {error && <span>{error}</span>}
             </form>
           </div>
         </div>
-        <div className="sideContainer"></div>
+        <div className="sideContainer">
+          {images.map((image, index) => (
+            <img src={image} key={index} alt="" />
+          ))}
+          <UploadWidget
+            uwConfig={{
+              cloudName: import.meta.env.VITE_CLOUD_NAME,
+              uploadPreset: import.meta.env.VITE_UPLOAD_PRESET,
+              multiple: true,
+              folder: "posts",
+            }}
+            setState={setImages}
+          />
+        </div>
       </div>
     </>
   );
