@@ -41,7 +41,7 @@ const SearchBar = () => {
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="number"
           name="minPrice"
           min={0}
           max={10000000}
@@ -49,7 +49,7 @@ const SearchBar = () => {
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="number"
           name="maxPrice"
           min={0}
           max={10000000}
