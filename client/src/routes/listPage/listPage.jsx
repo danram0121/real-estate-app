@@ -28,7 +28,16 @@ const ListPage = () => {
             </Suspense>
           </div>
         </div>
-        <div className="mapContainer">{/* <Map items={posts} /> */}</div>
+        <div className="mapContainer">
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error Loading posts!</p>}
+            >
+              {(postResponse) => <Map items={postResponse.data} />}
+            </Await>
+          </Suspense>
+        </div>
       </div>
     </>
   );
