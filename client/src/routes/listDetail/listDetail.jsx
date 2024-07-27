@@ -6,6 +6,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 const ListDetail = () => {
   const post = useLoaderData();
@@ -168,8 +169,16 @@ const ListDetail = () => {
                 Send a Message
               </button>
               <button className="button" onClick={handleSave}>
-                <img src="/save.png" alt="" />
-                {saved ? "Property Saved" : "Save Property"}
+                {saved ? (
+                  <>
+                    <FaBookmark color="red" /> Property Saved
+                  </>
+                ) : (
+                  <>
+                    <FaRegBookmark />
+                    Save Property
+                  </>
+                )}
               </button>
             </div>
           </div>
