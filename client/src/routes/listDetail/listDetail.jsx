@@ -2,11 +2,33 @@ import "./listDetail.scss";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
 import DOMPurify from "dompurify";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 
 const ListDetail = () => {
   const post = useLoaderData();
-  console.log(post);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [saved, setSaved] = useState(post.isSaved);
+
+  const handleSave = async () => {
+    // FOLLOWING REACT 19 UPDATE TO USE useOptimistic HOOK
+    setSaved((prev) => !prev);
+    if (!currentUser) {
+      navigate("/login");
+    }
+
+    try {
+      await apiRequest.post("/users/save", {
+        postId: post.id,
+      });
+    } catch (error) {
+      console.log(error);
+      setSaved((prev) => !prev); // REVERT BACK TO ORIGINAL STATE
+    }
+  };
   return (
     <>
       <div className="listDetail">
@@ -141,14 +163,14 @@ const ListDetail = () => {
               <Map items={[post]} />
             </div>
             <div className="buttons">
-              <div className="button">
+              <button className="button">
                 <img src="/chat.png" alt="" />
                 Send a Message
-              </div>
-              <div className="button">
+              </button>
+              <button className="button" onClick={handleSave}>
                 <img src="/save.png" alt="" />
-                Save Property
-              </div>
+                {saved ? "Property Saved" : "Save Property"}
+              </button>
             </div>
           </div>
         </div>
