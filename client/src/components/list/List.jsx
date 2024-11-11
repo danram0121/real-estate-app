@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./list.scss";
 import Card from "../card/Card";
 
